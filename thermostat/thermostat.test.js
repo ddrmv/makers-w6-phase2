@@ -2,6 +2,7 @@ const Thermostat = require('./thermostat');
 
 describe('Thermostat', () => {
   beforeEach(() => {
+    // eslint-disable-next-line no-unused-vars
     thermostat = new Thermostat();
   });
 
@@ -33,6 +34,16 @@ describe('Thermostat', () => {
     it('increases up to 25 when powerSavingMode is true', () => {
       thermostat.setPowerSavingMode(true);
       repeatObjectFnTimes(thermostat, 'up', 20);
+      expect(thermostat.getTemperature()).toEqual(25);
+    });
+  });
+
+  describe('#setPowerSavingMode', () => {
+    it('sets temperature to 25 on enable if already higher', () => {
+      expect(thermostat.getTemperature()).toEqual(20);
+      repeatObjectFnTimes(thermostat, 'up', 20);
+      expect(thermostat.getTemperature()).toEqual(32);
+      thermostat.setPowerSavingMode(true);
       expect(thermostat.getTemperature()).toEqual(25);
     });
   });
@@ -78,11 +89,8 @@ describe('Thermostat', () => {
   });
 });
 
-
 const repeatObjectFnTimes = (object, callbackName, times) => {
   for (let i = 0; i < times; i++) {
     object[callbackName]();
   }
 };
-
-

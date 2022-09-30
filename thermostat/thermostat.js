@@ -1,8 +1,7 @@
-/* eslint-disable require-jsdoc */
 const DEFAULT_TEMPERATURE = 20;
 const PSM_ON_MAX_TEMP = 25;
 const PSM_OFF_MAX_TEMP = 32;
-const MIN_TEMP = 10;
+const MINIMUM_TEMPERATURE = 10;
 
 class Thermostat {
   constructor() {
@@ -16,6 +15,9 @@ class Thermostat {
 
   setPowerSavingMode(setting) {
     this.powerSavingMode = setting;
+    if (this.temperature > PSM_ON_MAX_TEMP) {
+      this.temperature = PSM_ON_MAX_TEMP;
+    }
   }
 
   up() {
@@ -26,7 +28,7 @@ class Thermostat {
   }
 
   down() {
-    if (this.temperature > MIN_TEMP) {
+    if (this.temperature > MINIMUM_TEMPERATURE) {
       this.temperature--;
     }
   }
